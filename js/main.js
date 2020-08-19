@@ -3,14 +3,26 @@ function init() {
   gsap.set(".projects", { autoAlpha: 1 });
   gsap.set(".project", { x: "-100%" });
 
-  const element = document.querySelector("div.project01");
+  const element = document.querySelector("div.project01"),
+    projectClasses = element.className.split(" "),
+    projectClass = projectClasses[1];
 
   tlIn = gsap.timeline();
   tlIn.fromTo(
     element,
     { autoAlpha: 0, x: "-100%" },
-    { duration: 0.7, autoAlpha: 1, x: 0 }
+    {
+      duration: 0.7,
+      autoAlpha: 1,
+      x: 0,
+      onStart: updateClass,
+      onStartParams: [projectClass],
+    }
   );
+
+  function updateClass(projectClass) {
+    document.querySelector("body").className = projectClass;
+  }
 }
 
 window.addEventListener("load", function () {
