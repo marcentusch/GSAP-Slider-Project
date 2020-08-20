@@ -7,7 +7,7 @@ function init() {
     projectClasses = element.className.split(" "),
     projectClass = projectClasses[1];
 
-  tlIn = gsap.timeline();
+  const tlIn = gsap.timeline();
   tlIn.fromTo(
     element,
     { autoAlpha: 0, x: "-100%" },
@@ -19,6 +19,17 @@ function init() {
       onStartParams: [projectClass],
     }
   );
+
+  const tlOut = gsap.timeline();
+  tlOut.to(element, {
+    duration: 0.7,
+    x: 250,
+    autoAlpha: 0,
+  });
+
+  // Combine the other two timelines into a master timeline
+  const tlTransition = gsap.timeline();
+  tlTransition.add(tlIn).add(tlOut);
 
   function updateClass(projectClass) {
     document.querySelector("body").className = projectClass;
